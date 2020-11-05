@@ -2,9 +2,7 @@ import numpy as np
 import random
 import argparse
 
-'''
-Define Function
-'''
+'''Define Function'''
 
 
 def get_data(path, bias=1.0, scale=1.0):
@@ -54,9 +52,7 @@ def PLA(X, Y):
 
 
 def main():
-    '''
-    Parsing
-    '''
+    '''Parsing'''
     parser = argparse.ArgumentParser(
         description='Argument Parser for MLF HW1.')
     parser.add_argument('--path', default='hw1_train.dat')
@@ -65,9 +61,7 @@ def main():
     # load data
     X, Y = get_data(args.path)
 
-    '''
-    Answer questions
-    '''
+    '''Answer questions'''
     # Q16. Repeat your experiment for 1000 times, each with a different random seed.
     # What is the median number of updates before the algorithm returns wPLA? Choose the closest value.
     print('RUNNING Q16...')

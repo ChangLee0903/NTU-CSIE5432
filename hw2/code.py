@@ -3,9 +3,7 @@ import random
 from scipy.stats import bernoulli
 import argparse
 
-'''
-Define Function
-'''
+'''Define Function'''
 
 
 def generate_data(size, tau):
@@ -74,9 +72,7 @@ def get_answer(exp_num, size, tau, IsSimulate=False):
 
 
 def main():
-    '''
-    Parsing
-    '''
+    '''Parsing'''
     parser = argparse.ArgumentParser(
         description='Argument Parser for MLF HW1.')
     parser.add_argument('--mode', default='closedform',
@@ -89,10 +85,7 @@ def main():
         is_simulate = False
         print("Tesing by closed form!")
 
-    '''
-    Answer questions
-    '''
-
+    '''Answer questions'''
     print('RUNNING Q16...')
     print('Answer of Q16 : {:.4f}\n'.format(get_answer(
         exp_num=10000, size=2, tau=0, IsSimulate=is_simulate)))
