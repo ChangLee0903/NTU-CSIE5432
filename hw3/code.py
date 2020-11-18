@@ -46,12 +46,12 @@ def err(w, X, Y, mode='sqr'):
         return ((Y_pred - Y)**2).mean()
     elif mode == 'ce':
         return -np.log(sigmoid(Y * Y_pred)).mean()
-    elif mode == '01':
+    elif mode == '0/1':
         Y_pred = sign(Y_pred)
         return (Y.astype(int) != Y_pred.astype(int)).mean()
 
 
-def SGD(X, Y, lr, w_init=None, step_num=5566, mode='sqr'):
+def SGD(X, Y, lr, w_init=None, step_num=1000000, mode='sqr'):
     def random_pick(X, Y):
         idx = random.randint(0, X.shape[0] - 1)
         return X[idx:idx+1], Y[idx:idx+1]
@@ -59,7 +59,7 @@ def SGD(X, Y, lr, w_init=None, step_num=5566, mode='sqr'):
     def grad_func(w, X, Y, mode):
         batch_size = X.shape[0]
         if mode == 'sqr':
-            return -(2 / batch_size) * (np.matmul(X.T, np.matmul(X, w)) - np.matmul(X.T, Y))
+            return -(2 / batch_size) * np.matmul(X.T, np.matmul(X, w) - Y)
         elif mode == 'ce':
             return np.mean(sigmoid(-Y * np.matmul(X, w)).reshape(-1, 1) * (Y.reshape(-1, 1) * X), axis=0)
 
@@ -68,6 +68,7 @@ def SGD(X, Y, lr, w_init=None, step_num=5566, mode='sqr'):
 
     if mode == 'sqr':
         wLIN = get_wLIN(X, Y)
+        E_in_sqr_LIN = err(wLIN, X, Y, mode='sqr')
 
     # initialization
     step = 0
@@ -81,12 +82,9 @@ def SGD(X, Y, lr, w_init=None, step_num=5566, mode='sqr'):
 
         # check early stopping
         if mode == 'sqr':
-            E_in_sqr_LIN = err(wLIN, X, Y, mode='sqr')
-
             E_in_sqr = err(w, X, Y, mode='sqr')
             if E_in_sqr <= 1.01 * E_in_sqr_LIN:
                 break
-
     return w, step
 
 
@@ -136,21 +134,21 @@ def main():
 
     print('RUNNING Q18...')
     print('Answer of Q18 : {:.4f}\n'.format(
-        abs(err(wLIN, X_tst, Y_tst, mode='01') - err(wLIN, X_tra, Y_tra, mode='01'))))
+        abs(err(wLIN, X_tst, Y_tst, mode='0/1') - err(wLIN, X_tra, Y_tra, mode='0/1'))))
 
     print('RUNNING Q19...')
     X_tra_Q = Q_transform(X_tra, Q=3)
     X_tst_Q = Q_transform(X_tst, Q=3)
     wLIN_Q = get_wLIN(X_tra_Q, Y_tra)
     print('Answer of Q19 : {:.4f}\n'.format(abs(
-        err(wLIN_Q, X_tst_Q, Y_tst, mode='01') - err(wLIN_Q, X_tra_Q, Y_tra, mode='01'))))
+        err(wLIN_Q, X_tst_Q, Y_tst, mode='0/1') - err(wLIN_Q, X_tra_Q, Y_tra, mode='0/1'))))
 
     print('RUNNING Q20...')
     X_tra_Q = Q_transform(X_tra, Q=10)
     X_tst_Q = Q_transform(X_tst, Q=10)
     wLIN_Q = get_wLIN(X_tra_Q, Y_tra)
     print('Answer of Q20 : {:.4f}\n'.format(abs(
-        err(wLIN_Q, X_tst_Q, Y_tst, mode='01') - err(wLIN_Q, X_tra_Q, Y_tra, mode='01'))))
+        err(wLIN_Q, X_tst_Q, Y_tst, mode='0/1') - err(wLIN_Q, X_tra_Q, Y_tra, mode='0/1'))))
 
 
 if __name__ == "__main__":
