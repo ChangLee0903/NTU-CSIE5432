@@ -6,5 +6,5 @@
 ## instructed by Hsuan-Tien Lin
 * [Course website](https://www.csie.ntu.edu.tw/~htlin/course/ml20fall/)
 
-It's historical homework record in ML Foundations and ML Techniques.
+It's my historical homework record in ML Foundations and ML Techniques.
 Feel free to discuss with me if you have any questions in my answers. 
