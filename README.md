@@ -1,4 +1,4 @@
-# Machine Learning Foundations 2020 Fall
+# Machine Learning Foundations/Techniques 2020 Fall
 <p>
   <img src="logo.PNG"/width="200" height="200">
 </p>
